@@ -24,8 +24,10 @@
 	<button id="playButton" type="button">Play</button>
 	<button id="pauseButton" type="button">Pause</button>
 	<button id="stopButton" type="button">Stop</button>
-	<button type="button">Jump to 5 sec forward</button>
-	<button type="button">Jump to 5 sec backwards</button>	
+	<button id="decreaseVolumeButton" type="button">Decrease volume</button>
+	<button id="increaseVolumeButton" type="button">Increase volume</button>	
+    <button id="jumpBackwardsButton" type="button">Jump to 5 sec backwards</button>	
+	<button id="jumpForwardsButton" type="button">Jump to 5 sec forwards</button>	
 
 
 	 <h1>Big Bunny</h1>
@@ -41,13 +43,26 @@
   
   <script>
         var player = videojs('my_video_1');
+        var firstInit = true;
         playButton.addEventListener('click', updatePlay);
         pauseButton.addEventListener('click', updatePause);
         stopButton.addEventListener('click', updateStop);
+        decreaseVolumeButton.addEventListener('click', updateDecreaseVolume);
+        increaseVolumeButton.addEventListener('click', updateIncreaseVolume);
+        jumpBackwardsButton.addEventListener('click', updateJumpBackwards);
+        jumpForwardsButton.addEventListener('click', updateJumpForwards);
+
         function updatePlay()
         {
+          
            player.play();
+           if(firstInit == true)
+               {               
+                   player.volume(0);
+                   firstInit = false;
+               }
         }
+
         function updatePause()
         {
             player.pause();
@@ -56,10 +71,35 @@
         {
             player.currentTime(0);
             player.pause();
+            player.volume(0);
         }
-  </script>
- 
+        function updateDecreaseVolume()
+        {
+          if (player.volume()!= 0)
+            {
+            player.volume(player.volume() - 0.2);
 
+        }
+        }
+        function updateIncreaseVolume()
+        {
+            if (player.volume()!= 1)
+            {
+             player.volume(player.volume() + 0.2);
+        }   
+        }
+            
+        function updateJumpBackwards()
+        {
+            player.currentTime(player.currentTime() - 5);
+        }
+        function updateJumpForwards()
+        {
+             player.currentTime(player.currentTime() + 5);
+        }
+            
+
+  </script>
 
 	</script>
 
